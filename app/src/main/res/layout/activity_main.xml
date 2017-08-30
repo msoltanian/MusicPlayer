@@ -1,119 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/tb_main"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="-16dp"
-        android:background="@color/colorPrimary">
+        android:layout_height="match_parent">
 
-
-        <RelativeLayout
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/tb_main"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="-16dp"
+            android:background="@color/colorPrimary">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/iv_home"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/button_transparent_style"
+                    android:clickable="true"
+                    android:layout_alignParentRight="true"
+                    android:padding="16dp"
+                    android:src="@drawable/ic_menu_white_48dp"
+
+                    />
+
+                <com.example.payam1991.msmusic.view.customs.MsTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/app_name"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+
+                    android:layout_toLeftOf="@+id/iv_home" />
+
+                <ImageView
+                    android:id="@+id/iv_search"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/button_transparent_style"
+                    android:clickable="true"
+                    android:padding="16dp"
+                    android:src="@drawable/ic_search_white_48dp"
+
+                    />
+
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_song_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_below="@id/tb_main"
+
+            >
+
+        </android.support.v7.widget.RecyclerView>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_below="@+id/tb_main"
+            android:background="@drawable/toolbar_drop_shadow" />
+
+        <LinearLayout
+            android:id="@+id/ll_song_panel"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimaryDark"
+            android:clickable="true"
+            android:gravity="right|center_vertical"
+            android:visibility="gone">
 
             <com.example.payam1991.msmusic.view.customs.MsTextView
-                android:layout_width="match_parent"
+                android:id="@+id/tv_song_name"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="@string/app_name"
-                android:textColor="@color/white"
-                android:textSize="18sp"
+                android:layout_marginRight="8dp"
+                android:ellipsize="end"
+                android:lines="1"
 
-                />
+                android:maxLength="15"
+                android:text="قلب من"
+                android:textColor="@color/grey_900"
+                android:textSize="17dp" />
 
             <ImageView
-                android:id="@+id/iv_search"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:background="@drawable/button_transparent_style"
-                android:clickable="true"
-                android:padding="12dp"
-                android:src="@drawable/ic_search_white_48dp"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="4dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="4dp"
+                android:background="@color/orange_700"></ImageView>
+
+            <com.example.payam1991.msmusic.view.customs.MsTextView
+                android:id="@+id/tv_singer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:ellipsize="end"
+                android:lines="1"
+
+                android:maxLength="10"
+                android:text="حامی"
+                android:textColor="@color/grey_900"
+                android:textSize="19dp" />
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="8dp"
+                android:src="@drawable/ic_equalizer_white_48dp"
+                android:tint="@color/orange_700"
 
                 />
 
 
-        </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
 
-    </android.support.v7.widget.Toolbar>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_song_list"
-        android:layout_width="match_parent"
+    <fragment
+        android:id="@+id/frag_navigation_drawer"
+        android:name="com.example.payam1991.msmusic.view.fragments.Frag_NavigationDrawer"
+        android:layout_width="300dp"
         android:layout_height="match_parent"
+        android:layout_gravity="right"
+        tools:layout="@layout/frag_navigation_drawer">
 
-        android:layout_below="@id/tb_main"
+    </fragment>
 
-        >
-
-    </android.support.v7.widget.RecyclerView>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:layout_below="@+id/tb_main"
-        android:background="@drawable/toolbar_drop_shadow" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:id="@+id/ll_song_panel"
-        android:visibility="gone"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimaryDark"
-        android:gravity="right|center_vertical">
-
-        <com.example.payam1991.msmusic.view.customs.MsTextView
-            android:id="@+id/tv_song_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="قلب من"
-            android:textColor="@color/grey_900"
-            android:textSize="17dp"
-
-            android:layout_marginRight="8dp"
-            android:maxLength="15"
-            android:lines="1"
-            android:ellipsize="end" />
-
-        <ImageView
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/orange_700"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"></ImageView>
-
-        <com.example.payam1991.msmusic.view.customs.MsTextView
-            android:id="@+id/tv_singer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="حامی"
-            android:textColor="@color/grey_900"
-            android:textSize="19dp"
-
-            android:layout_marginRight="8dp"
-            android:ellipsize="end"
-            android:lines="1"
-            android:maxLength="10" />
-
-        <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:padding="8dp"
-            android:src="@drawable/ic_equalizer_white_48dp"
-            android:tint="@color/orange_700"
-
-            />
-
-
-    </LinearLayout>
-
-
-</RelativeLayout>
+</android.support.v4.widget.DrawerLayout>

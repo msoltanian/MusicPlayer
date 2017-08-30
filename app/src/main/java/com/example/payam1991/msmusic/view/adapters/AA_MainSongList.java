@@ -11,14 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.example.payam1991.msmusic.MainActivity;
+import com.example.payam1991.msmusic.view.activities.MainActivity;
 import com.example.payam1991.msmusic.R;
-import com.example.payam1991.msmusic.SongActivity;
+import com.example.payam1991.msmusic.view.activities.SongActivity;
 import com.example.payam1991.msmusic.models.classes.Song;
-import com.example.payam1991.msmusic.models.services.MusicService;
 import com.example.payam1991.msmusic.view.holders.MainSongListHolder;
 
-import java.io.File;
 import java.util.List;
 
 /**
@@ -35,7 +33,7 @@ public class AA_MainSongList extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public AA_MainSongList(Context context, Activity act, List<Song> songList) {
         this.songList = songList;
         this.context = context;
-        this.act=act;
+        this.act = act;
         mInflater = LayoutInflater.from(context);
     }
 
@@ -47,20 +45,21 @@ public class AA_MainSongList extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
-        MainSongListHolder songListHolder= (MainSongListHolder) holder;
-        final Song song=songList.get(position);
-        songListHolder.getTvArtist().setText(song.getArtist());
+        MainSongListHolder songListHolder = (MainSongListHolder) holder;
+        final Song song = songList.get(position);
+        songListHolder.getTvArtist().setText(song.getArtist()+"");
         songListHolder.getTvName().setText(song.getTitle());
-        Uri sArtworkUri = Uri.parse("content://media/external/audio/albumart");
-        Uri uri = ContentUris.withAppendedId(sArtworkUri, Integer.valueOf((int) song.getAlbumId()));
-        Glide.with(context)
-                .load(uri)
-        .into(songListHolder.getIvThumb());
+            Uri sArtworkUri = Uri.parse("content://media/external/audio/albumart");
+            Uri uri = ContentUris.withAppendedId(sArtworkUri, Integer.valueOf((int) song.getAlbumId()));
+            Glide.with(context)
+                    .load(uri)
+                    .placeholder(R.drawable.music_placeholder)
+                    .into(songListHolder.getIvThumb());
 
         songListHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(act, SongActivity.class);
+                Intent i = new Intent(act, SongActivity.class);
                 MainActivity.musicSrv.setSong(position);
                 MainActivity.musicSrv.playSong();
                 act.startActivity(i);

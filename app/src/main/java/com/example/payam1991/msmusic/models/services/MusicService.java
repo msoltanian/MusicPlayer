@@ -1,7 +1,5 @@
 package com.example.payam1991.msmusic.models.services;
 
-import android.app.Notification;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ContentUris;
 import android.content.Intent;
@@ -14,8 +12,6 @@ import android.os.PowerManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import com.example.payam1991.msmusic.MainActivity;
-import com.example.payam1991.msmusic.R;
 import com.example.payam1991.msmusic.models.classes.Song;
 import com.example.payam1991.msmusic.models.enums.MediaController;
 
@@ -45,8 +41,6 @@ public class MusicService extends Service implements
     private int songPosn;
 
     private final IBinder musicBind = new MusicBinder();
-    private String songTitle = "";
-    private static final int NOTIFY_ID = 1;
     private boolean shuffle = false;
     private Random rand;
 
@@ -96,10 +90,7 @@ public class MusicService extends Service implements
     public void playSong() {
 
         player.reset();
-
         Song playSong = songs.get(songPosn);
-
-        songTitle = playSong.getTitle();
         long currSong = playSong.getId();
         Uri trackUri = ContentUris.withAppendedId(
                 android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
@@ -204,7 +195,7 @@ public class MusicService extends Service implements
         playSong();
     }
 
-    public Song getCurrentSong(){
+    public Song getCurrentSong() {
         return songs.get(songPosn);
     }
 
@@ -217,10 +208,7 @@ public class MusicService extends Service implements
         if (shuffle) shuffle = false;
         else shuffle = true;
     }
-
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        return Service.START_STICKY;
-    }
+    
 
     private void sendBroadcast(MediaController controller, Song object, long cur) {
         intent.putExtra(CONTROLLER_ACTION, controller.ordinal());

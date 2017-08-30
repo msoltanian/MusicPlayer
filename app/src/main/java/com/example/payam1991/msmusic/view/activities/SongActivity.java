@@ -1,16 +1,11 @@
-package com.example.payam1991.msmusic;
+package com.example.payam1991.msmusic.view.activities;
 
 import android.content.BroadcastReceiver;
-import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -18,13 +13,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.payam1991.msmusic.R;
 import com.example.payam1991.msmusic.models.SongUtil;
 import com.example.payam1991.msmusic.models.classes.Song;
 import com.example.payam1991.msmusic.models.services.MusicService;
 import com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar;
-
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 
 public class SongActivity extends AppCompatActivity {
 
@@ -37,6 +30,7 @@ public class SongActivity extends AppCompatActivity {
     ImageView ivBackground;
     ImageView ivForward;
     ImageView ivBackward;
+
 
     MusicService musicService;
 
@@ -74,7 +68,6 @@ public class SongActivity extends AppCompatActivity {
 
 
         circleSeekBar.setMax(100);
-
         circleSeekBar.postDelayed(onEverySecond, 1000);
 
         circleSeekBar.setOnSeekBarChangeListener(new HoloCircleSeekBar.OnCircleSeekBarChangeListener() {
@@ -153,6 +146,7 @@ public class SongActivity extends AppCompatActivity {
             Song song = (Song) intent.getSerializableExtra(MusicService.CONTROLLER_SONG);
             tvSongName.setText(song.getTitle());
             tvArtist.setText(song.getArtist());
+
         }
     };
 
@@ -160,25 +154,29 @@ public class SongActivity extends AppCompatActivity {
 
         @Override
         public void run() {
+            try{
+                if (circleSeekBar != null) {
+                    circleSeekBar.setValue((100 * musicService.getPlayer().getCurrentPosition() / musicService.getPlayer().getDuration()));
+                    int minutes = musicService.getPlayer().getCurrentPosition() / 60000;
+                    int second = (musicService.getPlayer().getCurrentPosition() - (minutes * 60000)) / 1000;
+                    if (second > 9)
+                        tvTime.setText(minutes + " : " + second);
+                    else tvTime.setText(minutes + " : 0" + second);
+                }
 
-            if (circleSeekBar != null) {
-                circleSeekBar.setValue((100 * musicService.getPlayer().getCurrentPosition() / musicService.getPlayer().getDuration()));
-                int minutes = musicService.getPlayer().getCurrentPosition() / 60000;
-                int second = (musicService.getPlayer().getCurrentPosition() - (minutes * 60000)) / 1000;
-                if (second > 9)
-                    tvTime.setText(minutes + " : " + second);
-                else tvTime.setText(minutes + " : 0" + second);
+                if (musicService.getPlayer().isPlaying()) {
+                    circleSeekBar.postDelayed(onEverySecond, 1000);
+                    Drawable drPause = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_pause_white_48dp);
+                    ivPlay.setImageDrawable(drPause);
+                } else {
+                    Drawable drPlay = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_play_arrow_white_48dp);
+                    ivPlay.setImageDrawable(drPlay);
+                }
+            }catch (Exception e){
 
             }
 
-            if (musicService.getPlayer().isPlaying()) {
-                circleSeekBar.postDelayed(onEverySecond, 1000);
-                Drawable drPause = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_pause_white_48dp);
-                ivPlay.setImageDrawable(drPause);
-            } else {
-                Drawable drPlay = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_play_arrow_white_48dp);
-                ivPlay.setImageDrawable(drPlay);
-            }
+
 
         }
     };

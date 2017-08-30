@@ -1,4 +1,4 @@
-package com.example.payam1991.msmusic;
+package com.example.payam1991.msmusic.view.activities;
 
 import android.Manifest;
 import android.content.BroadcastReceiver;
@@ -12,25 +12,26 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.payam1991.msmusic.R;
 import com.example.payam1991.msmusic.models.SongUtil;
 import com.example.payam1991.msmusic.models.classes.Song;
-import com.example.payam1991.msmusic.models.enums.MediaController;
 import com.example.payam1991.msmusic.models.services.MusicService;
 import com.example.payam1991.msmusic.view.adapters.AA_MainSongList;
 import com.example.payam1991.msmusic.view.customs.RtlGridLayoutManager;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.example.payam1991.msmusic.view.fragments.Frag_NavigationDrawer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,10 +40,13 @@ public class MainActivity extends AppCompatActivity {
 
     List<Song> songList;
     RecyclerView rvSongList;
+    public Frag_NavigationDrawer drawerFragment;
+    public android.support.v7.widget.Toolbar Toolbar;
 
     TextView tvArtist;
     TextView tvSongName;
     LinearLayout llSongPanel;
+    ImageView ivMenu;
 
     public static MusicService musicSrv;
     ServiceConnection musicConnection;
@@ -66,27 +70,20 @@ public class MainActivity extends AppCompatActivity {
         initViews();
         SongUtil.getSongList(songList, getContentResolver());
         connectToMusicService();
-
-        // Toast.makeText(getApplicationContext(), songList.get(0).getTitle()+"", Toast.LENGTH_LONG).show();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (playIntent == null) {
-            playIntent = new Intent(this, MusicService.class);
-            bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE);
-            startService(playIntent);
-            // Toast.makeText(getApplicationContext(), songList.get(0).getAlbumId() + "", Toast.LENGTH_LONG).show();
-        }
+        playIntent = new Intent(this, MusicService.class);
+        getApplicationContext().bindService(playIntent, musicConnection, 0);
+
+        // Toast.makeText(getApplicationContext(), songList.get(0).getAlbumId() + "", Toast.LENGTH_LONG).show();
+
     }
 
     @Override
     protected void onDestroy() {
-        stopService(playIntent);
         musicSrv = null;
         super.onDestroy();
     }
@@ -96,7 +93,14 @@ public class MainActivity extends AppCompatActivity {
         rvSongList = (RecyclerView) findViewById(R.id.rv_song_list);
         tvArtist = (TextView) findViewById(R.id.tv_singer);
         tvSongName = (TextView) findViewById(R.id.tv_song_name);
-        llSongPanel= (LinearLayout) findViewById(R.id.ll_song_panel);
+        llSongPanel = (LinearLayout) findViewById(R.id.ll_song_panel);
+        ivMenu= (ImageView) findViewById(R.id.iv_home);
+        Toolbar = (Toolbar)findViewById(R.id.tb_main);
+
+        drawerFragment = (Frag_NavigationDrawer)
+                getSupportFragmentManager().findFragmentById(R.id.frag_navigation_drawer);
+        drawerFragment.setUp(R.id.frag_navigation_drawer, (DrawerLayout) findViewById(R.id.activity_main), Toolbar);
+        ivMenu.setOnClickListener(ivHomeClickListener());
         recyclerViewData();
     }
 
@@ -119,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 musicSrv = binder.getService();
                 musicSrv.setList(songList);
                 musicBound = true;
-                if(musicSrv.isPng())
+                if (musicSrv.isPng())
                     llSongPanel.setVisibility(View.VISIBLE);
                 LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(mMessageReceiver,
                         new IntentFilter(MusicService.CONTROLLER_INTENT));
@@ -142,5 +146,15 @@ public class MainActivity extends AppCompatActivity {
             tvArtist.setText(song.getArtist());
         }
     };
+
+    private View.OnClickListener ivHomeClickListener(){
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerFragment.onHomeSelected();
+            }
+        };
+    }
+
 
 }

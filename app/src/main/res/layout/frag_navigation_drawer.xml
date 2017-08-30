@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:clickable="true"
+        android:id="@+id/rl_about"
+        android:background="@drawable/button_transparent_style"
+
+        >
+
+
+<com.example.payam1991.msmusic.view.customs.MsTextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/about_text"
+    android:textColor="@color/grey_800"
+    android:layout_centerVertical="true"
+    android:textSize="16sp"
+    android:layout_marginRight="16dp"
+
+    />
+
+    </RelativeLayout>
+
+</LinearLayout>

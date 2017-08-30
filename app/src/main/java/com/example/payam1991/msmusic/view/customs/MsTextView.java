@@ -32,14 +32,12 @@ public class MsTextView extends AppCompatTextView {
 
 
     private void setTypeFace(Context mCon, AttributeSet attrs) {
-//        if (attrs != null) {
-//            TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.MyTextView);
-//            String fontName = a.getString(R.styleable.MyTextView_fontName);
-//            if (fontName != null) {
-//                Typeface myTypeface = Typeface.createFromAsset(getContext().getAssets(), "fonts/" + fontName);
-//                this.setTypeface(myTypeface);
-//            }
-//            a.recycle();
-//        }
+        if (attrs != null) {
+            String fontName = "IRANSansMobile_Light.ttf";
+            if (fontName != null) {
+                Typeface myTypeface = Typeface.createFromAsset(getContext().getAssets(), "fonts/" + fontName);
+                this.setTypeface(myTypeface);
+            }
+        }
     }
 }

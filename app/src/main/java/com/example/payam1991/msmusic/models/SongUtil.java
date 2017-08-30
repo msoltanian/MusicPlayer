@@ -6,13 +6,17 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
+import android.support.v4.content.ContextCompat;
 
+import com.example.payam1991.msmusic.R;
 import com.example.payam1991.msmusic.models.classes.Song;
 
 import java.io.FileNotFoundException;
@@ -61,8 +65,10 @@ public class SongUtil {
             in = res.openInputStream(uri);
             return BitmapFactory.decodeStream(in);
             // artwork = ;
-        } catch (FileNotFoundException e) {
-            return null;
+        } catch (Exception e) {
+            Drawable d = ContextCompat.getDrawable(context, R.drawable.music_placeholder);
+            Bitmap bitmap = ((BitmapDrawable)d).getBitmap();
+            return bitmap;
         }
     }
 

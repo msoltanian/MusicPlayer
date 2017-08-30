@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.payam1991.msmusic" >
+    package="com.example.payam1991.msmusic">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -19,50 +19,36 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
+        android:name=".MyApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-
-
-
-
-
-        <activity android:name=".MainActivity"
-        android:launchMode="singleTop"
-        android:screenOrientation="portrait"
-
-        >
-
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
-
-        <activity android:name=".SongActivity"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".view.activities.MainActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-
-            >
-
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".view.activities.SongActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activities.AboutActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
-        <service android:name="com.example.payam1991.msmusic.models.services.MusicService"
+        <service
+            android:name=".models.services.MusicService"
             android:enabled="true"
-            android:exported="true"
-            /><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:exported="true" />
+
     </application>
 
 </manifest>
