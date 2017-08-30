@@ -58,14 +58,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) {
-
-                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-                return;
-            }
-        }
 
         initViews();
         SongUtil.getSongList(songList, getContentResolver());
@@ -106,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
     void recyclerViewData() {
 
-        AA_MainSongList aaMainSongList = new AA_MainSongList(getApplicationContext(), this, songList);
+        AA_MainSongList aaMainSongList = new AA_MainSongList(getBaseContext(), this, songList);
         RtlGridLayoutManager gridLayoutManager = new RtlGridLayoutManager(this, 3);
         rvSongList.setLayoutManager(gridLayoutManager);
         rvSongList.setAdapter(aaMainSongList);

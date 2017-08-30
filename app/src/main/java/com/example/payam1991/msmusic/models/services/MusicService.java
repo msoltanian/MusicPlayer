@@ -208,7 +208,7 @@ public class MusicService extends Service implements
         if (shuffle) shuffle = false;
         else shuffle = true;
     }
-    
+
 
     private void sendBroadcast(MediaController controller, Song object, long cur) {
         intent.putExtra(CONTROLLER_ACTION, controller.ordinal());
